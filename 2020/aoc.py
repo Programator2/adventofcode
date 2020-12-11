@@ -30,6 +30,15 @@ def load_map(path):
     return list(map(lambda x: x.rstrip(), lines))
 
 
+def load_map_ll(path):
+    """Return list of lists of one char strings ("2D array") from the file at
+    `path`
+    """
+    with open(path) as f:
+        lines = f.readlines()
+    return list(map(lambda x: list(x.rstrip()), lines))
+
+
 def load_ints(path):
     """
     Return a list of ints loaded from file at `path`
