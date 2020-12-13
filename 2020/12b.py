@@ -1,6 +1,5 @@
 from aocd import submit
 from aoc import *
-from math import sqrt
 
 
 def submita(answer):
