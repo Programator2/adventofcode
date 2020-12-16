@@ -46,3 +46,11 @@ def load_ints(path):
     with open(path) as f:
         lines = f.readlines()
     return list(map(lambda x: int(x.rstrip()), lines))
+
+
+def load_ints_split(path, splitchar):
+    """
+    Return a list of ints loaded from file at `path` delimited by splitchar.
+    """
+    line = file(path)
+    return [int(i) for i in line.split(splitchar)]
