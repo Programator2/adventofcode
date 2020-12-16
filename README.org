@@ -29,5 +29,5 @@
   |   2 | 00:11:46 |  2696 |     0 | 00:15:04 |  2083 |     0 |
   |   1 | 00:07:22 |   631 |     0 | 00:08:34 |   548 |     0 |
 * License
-  All source code files aer under /GPL-3.0 License/. See =LICENSE= for more
+  All source code files are under /GPL-3.0 License/. See =LICENSE= for more
   information.
