@@ -217,25 +217,6 @@ def create_raster(tiles, m):
     return global_picture
 
 
-def compute_roughness(row, col, picture):
-    monster = [
-        "                  # ",
-        "#    ##    ##    ###",
-        " #  #  #  #  #  #   ",
-    ]
-    width = len(monster[0])
-    height = len(monster)
-    roughness = -sum(1 for c in monster for d in c if d == "#")
-    try:
-        for row_index, r in enumerate(picture[row : row + width]):
-            for col_index, c in enumerate(r[col : col + height]):
-                if c == "#":
-                    roughness += 1
-    except TypeError:
-        breakpoint()
-    return roughness
-
-
 def search_monster(picture):
     monster = [
         "                  # ",
