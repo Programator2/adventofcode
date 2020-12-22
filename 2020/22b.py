@@ -59,7 +59,7 @@ def main():
     hand2 = deque(p2)
     out = 0
     games = set()
-    winner = recursive_combat(hand1, hand2, games)
+    winner = recursive_combat(hand1, hand2)
     if winner == 'instant':
         winner = 'player1'
     if winner == 'player1':
