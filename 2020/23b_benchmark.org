@@ -1,0 +1,32 @@
+* Advent of Code 2020 Day 23
+  Perfect puzzle to show differences between interpreted, JIT and compiled
+  language. The same solution was written in two languages -- Python and C.
+  Python code was run on CPython and PyPy implementation. C code was compiled
+  with optimization turned on. Benchmark ran on i5 3210M Win10 using Cygwin.
+* Python 3.8
+  #+begin_example
+  $ time python3 23b.py
+  192515314252
+
+  real    0m40.930s
+  user    0m0.016s
+  sys     0m0.000s
+  #+end_example
+* PyPy 3.7
+  #+begin_example
+  $ time pypy3 23b.py
+  192515314252
+
+  real    0m10.309s
+  user    0m0.062s
+  sys     0m0.015s
+  #+end_example
+* GCC 10.2 -O3
+  #+begin_example
+  $ time ./23b.exe
+  192515314252
+
+  real    0m1.598s
+  user    0m0.000s
+  sys     0m0.030s
+  #+end_example
