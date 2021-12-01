@@ -1,6 +1,9 @@
 * About
   Solutions in *Python*. I'm using the =advent-of-code-data= package to submit
   my answers.
+* Personal Stats 2021
+  | Day |     Time | Rank | Score |     Time | Rank | Score |
+  |   1 | 00:02:33 | 1048 |     0 | 00:06:39 | 1169 |     0 |
 * Personal Stats 2020
   | Day |     Time |  Rank | Score |     Time |  Rank | Score |
   |  25 | 00:32:11 |  2354 |     0 | 00:32:44 |  1968 |     0 |

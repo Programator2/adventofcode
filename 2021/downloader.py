@@ -10,7 +10,7 @@ import aocd
 import sys
 
 DAY = datetime.date.today().day
-YEAR = 2020
+YEAR = 2021
 FILENAME = f"{DAY}.txt"
 
 print(f"Preparing to download {FILENAME}")
