@@ -3,6 +3,7 @@
   my answers.
 * Personal Stats 2021
   | Day |     Time | Rank | Score |     Time | Rank | Score |
+  |   2 | 00:05:39 | 3733 |     0 | 00:08:33 | 3205 |     0 |
   |   1 | 00:02:33 | 1048 |     0 | 00:06:39 | 1169 |     0 |
 * Personal Stats 2020
   | Day |     Time |  Rank | Score |     Time |  Rank | Score |
