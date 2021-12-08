@@ -1,3 +1,7 @@
+from typing import Callable
+from aocd import submit
+
+
 def lines(path):
     """
     Return a list of lines from the file `path`
@@ -54,3 +58,14 @@ def load_ints_split(path, splitchar):
     """
     line = file(path)
     return [int(i) for i in line.split(splitchar)]
+
+
+def test_and_submit(f: Callable, test_inp: str, expected: str, inp: str):
+    test_res = f(test_inp)
+    exp_res = filerstrip(expected)
+    if str(test_res) != exp_res:
+        print(f'Incorrect: {test_res}')
+        return
+    res = f(inp)
+    print('submitting')
+    submit(res)
