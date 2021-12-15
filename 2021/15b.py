@@ -30,10 +30,6 @@ def main(input_file: str):
     return out - d[(0, 0)]
 
 
-inf = float('inf')
-Edge = namedtuple('Edge', ['start', 'end', 'cost'])
-
-
 # Priority queue implementation from
 # https://docs.python.org/3.3/library/heapq.html#priority-queue-implementation-notes
 class PriorityQueue(UserList):
@@ -66,6 +62,9 @@ class PriorityQueue(UserList):
                 return task
         raise KeyError('pop from an empty priority queue')
 
+# Dijkstra from https://rosettacode.org/wiki/Dijkstra%27s_algorithm#Python
+inf = float('inf')
+Edge = namedtuple('Edge', ['start', 'end', 'cost'])
 
 class Graph():
     def __init__(self, edges):

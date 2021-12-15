@@ -2,11 +2,6 @@ from aoc import *
 from collections import namedtuple, deque
 
 
-# Dijkstra from https://rosettacode.org/wiki/Dijkstra%27s_algorithm#Python
-inf = float('inf')
-Edge = namedtuple('Edge', ['start', 'end', 'cost'])
-
-
 def main(input_file: str):
     inp = load_map_ll(input_file)
     edges = []
@@ -25,6 +20,10 @@ def main(input_file: str):
     return out - d[(0, 0)]
 
 
+# Dijkstra from https://rosettacode.org/wiki/Dijkstra%27s_algorithm#Python
+inf = float('inf')
+Edge = namedtuple('Edge', ['start', 'end', 'cost'])
+
 class Graph():
     def __init__(self, edges):
         self.edges = [Edge(*edge) for edge in edges]
@@ -42,7 +41,6 @@ class Graph():
             # neighbours[end].add((start, cost))
 
         while q:
-            # pp(q)
             u = min(q, key=lambda vertex: dist[vertex])
             q.remove(u)
             if dist[u] == inf or u == dest:
