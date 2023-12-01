@@ -1,0 +1,2 @@
+advent-of-code-data==2.0.1
+more-itertools==10.1.0

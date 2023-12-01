@@ -1,8 +1,12 @@
 * About
   Solutions in *Python*. I'm using the =advent-of-code-data= package to submit
   my answers.
+* Personal Stats 2023
+  | Day |     Time | Rank | Score |     Time | Rank | Score |
+  |   1 | 00:09:59 | 4908 |     0 | 00:20:00 | 1732 |     0 |
 * Personal Stats 2021
   | Day |     Time |  Rank | Score |     Time |  Rank | Score |
+  |  25 | 01:02:27 |  2625 |     0 |          |       |       |
   |  24 | 06:02:51 |  2267 |     0 | 06:04:39 |  2168 |     0 |
   |  22 | 00:12:35 |   809 |     0 |          |       |       |
   |  21 | 00:31:09 |  3235 |     0 |          |       |       |
