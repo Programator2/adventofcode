@@ -2,8 +2,9 @@
   Solutions in *Python*. I'm using the =advent-of-code-data= package to submit
   my answers.
 * Personal Stats 2023
-  | Day |     Time | Rank | Score |     Time | Rank | Score |
-  |   1 | 00:09:59 | 4908 |     0 | 00:20:00 | 1732 |     0 |
+  | Day |     Time |  Rank | Score |     Time |  Rank | Score |
+  |   2 | 09:09:47 | 55095 | 0     | 09:13:47 | 51351 |     0 |
+  |   1 | 00:09:59 |  4908 | 0     | 00:20:00 |  1732 |     0 |
 * Personal Stats 2021
   | Day |     Time |  Rank | Score |     Time |  Rank | Score |
   |  25 | 01:02:27 |  2625 |     0 |          |       |       |

@@ -62,10 +62,12 @@ def load_ints_split(path, splitchar):
 
 def test_and_submit(f: Callable, test_inp: str, expected: str, inp: str):
     test_res = f(test_inp)
+    if test_res is None:
+        return
     exp_res = filerstrip(expected)
     if str(test_res) != exp_res:
         print(f'Incorrect: {test_res}')
         return
     res = f(inp)
     print('submitting')
-    submit(res, day=1, year=2023)
+    submit(res, day=3, year=2023)
