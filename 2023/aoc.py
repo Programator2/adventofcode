@@ -66,8 +66,8 @@ def test_and_submit(f: Callable, test_inp: str, expected: str, inp: str):
         return
     exp_res = filerstrip(expected)
     if str(test_res) != exp_res:
-        print(f'Incorrect: {test_res}')
+        print(f'Incorrect: {test_res}, expected {exp_res}')
         return
     res = f(inp)
-    print('submitting')
-    submit(res, day=3, year=2023)
+    print(f'submitting: {res}')
+    submit(res, day=4, year=2023)
