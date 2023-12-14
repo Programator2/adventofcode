@@ -84,6 +84,13 @@ def full_range(start, stop):
             yield s
             return
 
+def pmat(ll):
+    """Print a matrix"""
+    for row in ll:
+        for c in row:
+            print(c, end='')
+        print()
+
 
 def test_and_submit(f: Callable, test_inp: str, expected: str, inp: str):
     test_res = f(test_inp)
