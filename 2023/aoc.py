@@ -31,15 +31,15 @@ def load_map(path):
     return list(map(lambda x: x.rstrip(), lines))
 
 
-def load_dd_map(path: str, factory=lambda: 0) -> defaultdict:
+def load_map_dd(path: str, factory=lambda: 0) -> defaultdict:
     """Return `defaultdict` with tuple (x, y) coordinates for each element of
-    the map
+    the map.
     """
     inp = load_map(path)
     d = defaultdict(factory)
     for r, row in enumerate(inp):
         for ei, e in enumerate(row):
-            d[(ei, r)] = factory()
+            d[(r, ei)] = e
     return d
 
 
