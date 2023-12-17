@@ -31,7 +31,7 @@ def load_map(path):
     return list(map(lambda x: x.rstrip(), lines))
 
 
-def load_map_dd(path: str, factory=lambda: 0) -> defaultdict:
+def load_map_dd(path: str, factory=lambda: 0, init=lambda x: x) -> defaultdict:
     """Return `defaultdict` with tuple (x, y) coordinates for each element of
     the map.
     """
@@ -39,7 +39,7 @@ def load_map_dd(path: str, factory=lambda: 0) -> defaultdict:
     d = defaultdict(factory)
     for r, row in enumerate(inp):
         for ei, e in enumerate(row):
-            d[(r, ei)] = e
+            d[(r, ei)] = init(e)
     return d
 
 
@@ -92,7 +92,7 @@ def pmat(ll):
         print()
 
 
-def test_and_submit(f: Callable, test_inp: str, expected: str, inp: str):
+def test_and_submit(f: Callable, test_inp: str, expected: str, inp: str, day: int=16):
     test_res = f(test_inp)
     if test_res is None:
         return
@@ -103,4 +103,4 @@ def test_and_submit(f: Callable, test_inp: str, expected: str, inp: str):
     print('Testing data correct, computing on real data now')
     res = f(inp)
     print(f'submitting: {res}')
-    submit(res, day=6, year=2023)
+    submit(res, day=day, year=2023)
