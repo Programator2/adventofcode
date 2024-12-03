@@ -7,7 +7,7 @@ def main(inp):
     return sum(
         int(a) * int(b)
         for a, b in re.findall(
-            r'mul\((\d{1,3}),(\d{1,3})\)',
+            r'mul\((\d+),(\d+)\)',
             re.sub(
                 r"don't\(\).*?(do\(\)|$)", '', filerstrip(inp).replace('\n', '')
             ),
@@ -17,7 +17,7 @@ def main(inp):
 
 # submitted solution follows
 def search(inp):
-    m = re.findall(r'mul\((\d{1,3}),(\d{1,3})\)', inp)
+    m = re.findall(r'mul\((\d+),(\d+)\)', inp)
     return sum(int(a) * int(b) for a, b in m)
 
 

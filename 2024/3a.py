@@ -6,7 +6,7 @@ import re
 def main(infi: str):
     return sum(
         int(a) * int(b)
-        for a, b in re.findall(r'mul\((\d{1,3}),(\d{1,3})\)', filerstrip(infi))
+        for a, b in re.findall(r'mul\((\d+),(\d+)\)', filerstrip(infi))
     )
 
 
