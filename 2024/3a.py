@@ -2,6 +2,7 @@ from aoc import *
 import re
 
 
+# happy?
 def main(infi: str):
     return sum(
         int(a) * int(b)
