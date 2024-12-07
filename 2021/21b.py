@@ -16,8 +16,6 @@ from heapq import *
 import itertools
 from more_itertools import take, peekable
 from functools import reduce as red
-from math import ceil
-from copy import deepcopy
 
 
 def help():
@@ -64,15 +62,18 @@ def player(starta: int, startb: int):
         throws[nthrow] = throwplus
         for i, occ in enumerate(occurences, 3):
             for position, counter in throws[nthrow-1].items():
+                won = False
                 for points, times in counter.items():
-                    new_points = points+get_points(position+i)
+                    new_points = points + get_points(position + i)
                     if new_points >= 21:
-                        winnings[nthrow] += times * occ * unwinningsb[nthrow-1]
-                        winnings_sum[nthrow] += occ * unwinningsb_sum[nthrow-1]
+                        winnings[nthrow] += times * occ
+                        # won = True
                         # do not add winning ones so that alg stops
+                        winnings_sum[nthrow] += occ * unwinningsb_sum[nthrow-1]
                         break
-                    throwplus[position+i][points+get_points(position+i)] = times * occ
-                    unwinnings_sum[nthrow] += occ * unwinningsb_sum[nthrow-1]
+                    throwplus[position+i][points+get_points(position+i)] = times + occ
+                # if won:
+                unwinnings_sum[nthrow] += occ * unwinningsb_sum[nthrow-1]
         unwinnings[nthrow] = sum(sum(times) for times in (counter.values() for counter in throwplus.values())) * unwinningsb[nthrow-1]
         # nthrow += 1
 
@@ -84,15 +85,18 @@ def player(starta: int, startb: int):
         throwsb[nthrow] = throwplusb
         for i, occ in enumerate(occurences, 3):
             for position, counter in throwsb[nthrow-1].items():
+                won = False
                 for points, times in counter.items():
                     new_points = points+get_points(position+i)
                     if new_points >= 21:
-                        winningsb[nthrow] += times * occ * unwinnings[nthrow-1]
-                        winningsb_sum[nthrow] += occ * unwinnings_sum[nthrow-1]
+                        winningsb[nthrow] += times * occ
+                        # won = True
+                        winningsb_sum[nthrow] += occ * unwinnings_sum[nthrow]
                         # do not add winning ones so that alg stops
                         break
-                    throwplusb[position+i][points+get_points(position+i)] = times * occ
-                    unwinningsb_sum[nthrow] += occ * unwinnings_sum[nthrow-1]
+                    throwplusb[position+i][points+get_points(position+i)] = times + occ
+                unwinningsb_sum[nthrow] += occ * unwinnings_sum[nthrow]
+                # if won:
         unwinningsb[nthrow] = sum(sum(times) for times in (counter.values() for counter in throwplusb.values())) * unwinnings[nthrow-1]
 
         if unwinningsb_sum[nthrow] == 0:
@@ -101,6 +105,8 @@ def player(starta: int, startb: int):
         nthrow += 1
     print(winnings)
     print(winningsb)
+    # print(unwinnings_sum)
+    # print(unwinningsb_sum)
 
 
     # return winnings, unwinnings
@@ -195,3 +201,5 @@ FILE = f"{DAY}.txt"
 # print(main(4, 8))
 # print(main(9, 3))
 main2()
+
+# 274790922411600
