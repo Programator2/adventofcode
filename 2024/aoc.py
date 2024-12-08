@@ -3,6 +3,8 @@ from aocd import submit
 from collections import defaultdict
 from collections.abc import Sequence
 from functools import reduce
+import gc
+from time import perf_counter_ns
 
 
 def lines(path):
@@ -54,6 +56,14 @@ def load_map_dd(path: str, factory=lambda: 0, init=lambda x: x) -> defaultdict:
         for ei, e in enumerate(row):
             d[(r, ei)] = init(e)
     return d
+
+
+def map_dd_size(dd: defaultdict) -> (int, int):
+    """Return size of defaultdict map.
+
+    :param dd: defaultdict map as returned by `load_map_dd`
+    """
+    return max(i for i, _ in dd) + 1, max(j for _, j in dd) + 1
 
 
 def load_map_ll(path: str):
@@ -151,3 +161,19 @@ def test_and_submit(f: Callable, test_inp: str, expected: str, inp: str, day: in
     res = f(inp)
     print(f'submitting: {res}')
     submit(res, day=day, year=2024)
+
+
+TIMER = perf_counter_ns
+
+
+class Timer:
+    def start(self):
+        self.gcold = gc.isenabled()
+        gc.disable()
+        self.start = TIMER()
+
+    def end(self):
+        diff = TIMER() - self.start
+        if self.gcold:
+            gc.enable()
+        return diff
