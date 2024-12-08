@@ -10,7 +10,7 @@ def main(infi: str):
         num, nums = line.split(': ')
         num = int(num)
         twos = list(map(int, nums.split()))
-        operations = list(product('+*|', repeat=len(twos)))
+        operations = list(product('+*|', repeat=len(twos) - 1))
         for ops in operations:
             res = twos[0]
             for operand, op in zip(twos[1:], ops):
