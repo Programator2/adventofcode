@@ -1,43 +1,36 @@
 from aoc import *
 
 
-def search(i, j, m, visited, nines, starti, startj):
-    starting = m[i, j][0]
-    if starting == 9:
-        m[starti, startj] = (m[starti, startj][0], m[starti, startj][1] + 1)
+def search(
+    i: int,
+    j: int,
+    m: defaultdict,
+    visited: set,
+    nines: set,
+):
+    if m[i, j] == 9:
         nines.add((i, j))
         return
     visited.add((i, j))
-    to_iterate = [
-        (i + di, j + dj)
-        for di, dj in ((1, 0), (0, 1), (-1, 0), (0, -1))
-        if (i + di, j + dj) in m
-        and (i + di, j + dj) not in visited
-        and m[i + di, j + dj][0] == starting + 1
+    [
+        search(di, dj, m, visited, nines)
+        for di, dj in [
+            (i + di, j + dj)
+            for di, dj in ((1, 0), (0, 1), (-1, 0), (0, -1))
+            if (i + di, j + dj) in m
+            and (i + di, j + dj) not in visited
+            and m[i + di, j + dj] == m[i, j] + 1
+        ]
     ]
-    for di, dj in to_iterate:
-        search(di, dj, m, visited, nines, starti, startj)
+    return nines
 
 
 def main(infi: str):
-    inp = load_map_dd(infi)
-    maxi, maxj = map_dd_size(inp)
-    inp = {
-        (i, j): (int(inp[i, j]), 0)
-        for i, j in product(range(maxi), range(maxj))
-    }
-    zeros = [
-        (i, j)
-        for i, j in product(range(maxi), range(maxj))
-        if inp[i, j][0] == 0
-    ]
-    s = 0
-    for i, j in zeros:
-        nines = set()
-        search(i, j, inp, set(), nines, i, j)
-        s += len(nines)
-
-    return s
+    inp = load_map_dd(infi, init=int)
+    return sum(
+        len(search(i, j, inp, set(), set()))
+        for i, j in [(i, j) for (i, j), num in inp.items() if num == 0]
+    )
 
 
 DAY = 10
