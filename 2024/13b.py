@@ -5,6 +5,37 @@ from sympy.solvers.solveset import linsolve
 from sympy import symbols, core
 
 
+# arithmetic solution for mY
+def main_arithmetic(infi: str):
+    inp = filerstrip(infi)
+    tokens = 0
+    for machine in inp.split('\n\n'):
+        lines = machine.split('\n')
+        ax, ay = map(
+            int,
+            re.fullmatch(r'Button A: X\+(.*?), Y\+(.*?)', lines[0]).groups(),
+        )
+        bx, by = map(
+            int,
+            re.fullmatch(r'Button B: X\+(.*?), Y\+(.*?)', lines[1]).groups(),
+        )
+        px, py = map(
+            int, re.fullmatch(r'Prize: X=(.*?), Y=(.*?)', lines[2]).groups()
+        )
+        if (
+            (by * (px + 10**13) - bx * (10**13 + py)) % (ax * by - ay * bx) == 0
+            and (
+                a := (by * (px + 10**13) - bx * (10**13 + py))
+                // (ax * by - ay * bx)
+            )
+            > 0
+            and (py + 10**13 - a * ay) % by == 0
+            and (b := (py + 10**13 - a * ay) // by) > 0
+        ):
+            tokens += 3 * a + b
+    return tokens
+
+
 def main(infi: str):
     inp = filerstrip(infi)
     tokens = 0
@@ -44,3 +75,4 @@ FILE = f"{DAY}.txt"
 # test_and_submit(main, FILE_TEST, FILE_EXP, FILE, DAY)
 # print(main(FILE_TEST))
 print(main(FILE))
+print(main_arithmetic(FILE))
