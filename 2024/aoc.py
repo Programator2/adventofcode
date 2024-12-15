@@ -46,11 +46,30 @@ def load_map(path: str):
     return list(map(lambda x: x.rstrip(), lines))
 
 
+def map_from_str(s: str):
+    """Return list of strings ("2D array") from the file at `path`
+    """
+    lines = s.split('\n')
+    return list(map(lambda x: x.rstrip(), lines))
+
+
 def load_map_dd(path: str, factory=lambda: 0, init=lambda x: x) -> defaultdict:
     """Return `defaultdict` with tuple (x, y) coordinates for each element of
     the map.
     """
     inp = load_map(path)
+    d = defaultdict(factory)
+    for r, row in enumerate(inp):
+        for ei, e in enumerate(row):
+            d[(r, ei)] = init(e)
+    return d
+
+
+def map_dd_from_str(path: str, factory=lambda: 0, init=lambda x: x) -> defaultdict:
+    """Return `defaultdict` with tuple (x, y) coordinates for each element of
+    the map.
+    """
+    inp = map_from_str(path)
     d = defaultdict(factory)
     for r, row in enumerate(inp):
         for ei, e in enumerate(row):
