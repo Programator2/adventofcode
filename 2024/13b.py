@@ -5,53 +5,49 @@ from sympy.solvers.solveset import linsolve
 from sympy import symbols, core
 
 
+def parse_input(infi: str):
+    return [
+        (
+            *map(
+                int,
+                re.fullmatch(
+                    r'Button A: X\+(.*?), Y\+(.*?)', machine.split('\n')[0]
+                ).groups(),
+            ),
+            *map(
+                int,
+                re.fullmatch(
+                    r'Button B: X\+(.*?), Y\+(.*?)', machine.split('\n')[1]
+                ).groups(),
+            ),
+            *map(
+                int,
+                re.fullmatch(
+                    r'Prize: X=(.*?), Y=(.*?)', machine.split('\n')[2]
+                ).groups(),
+            ),
+        )
+        for machine in filerstrip(infi).split('\n\n')
+    ]
+
+
 # arithmetic solution for mY
 def main_arithmetic(infi: str):
-    inp = filerstrip(infi)
     tokens = 0
-    for machine in inp.split('\n\n'):
-        lines = machine.split('\n')
-        ax, ay = map(
-            int,
-            re.fullmatch(r'Button A: X\+(.*?), Y\+(.*?)', lines[0]).groups(),
+    for ax, ay, bx, by, px, py in parse_input(infi):
+        a, mod = divmod(
+            by * (px + 10**13) - bx * (10**13 + py), ax * by - ay * bx
         )
-        bx, by = map(
-            int,
-            re.fullmatch(r'Button B: X\+(.*?), Y\+(.*?)', lines[1]).groups(),
-        )
-        px, py = map(
-            int, re.fullmatch(r'Prize: X=(.*?), Y=(.*?)', lines[2]).groups()
-        )
-        if (
-            (by * (px + 10**13) - bx * (10**13 + py)) % (ax * by - ay * bx) == 0
-            and (
-                a := (by * (px + 10**13) - bx * (10**13 + py))
-                // (ax * by - ay * bx)
-            )
-            > 0
-            and (py + 10**13 - a * ay) % by == 0
-            and (b := (py + 10**13 - a * ay) // by) > 0
-        ):
-            tokens += 3 * a + b
+        if mod == 0 and a > 0:
+            b, mod = divmod(py + 10**13 - a * ay, by)
+            if mod == 0 and b > 0:
+                tokens += 3 * a + b
     return tokens
 
 
 def main(infi: str):
-    inp = filerstrip(infi)
     tokens = 0
-    for machine in inp.split('\n\n'):
-        lines = machine.split('\n')
-        ax, ay = map(
-            int,
-            re.fullmatch(r'Button A: X\+(.*?), Y\+(.*?)', lines[0]).groups(),
-        )
-        bx, by = map(
-            int,
-            re.fullmatch(r'Button B: X\+(.*?), Y\+(.*?)', lines[1]).groups(),
-        )
-        px, py = map(
-            int, re.fullmatch(r'Prize: X=(.*?), Y=(.*?)', lines[2]).groups()
-        )
+    for ax, ay, bx, by, px, py in parse_input(infi):
         a, b = symbols('a, b', integer=True, positive=True)
         system = (
             ax * a + bx * b - px - 10000000000000,
