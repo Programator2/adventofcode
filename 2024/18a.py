@@ -2,7 +2,6 @@ from aoc import *
 from itertools import product
 from collections import namedtuple, deque, UserList
 from heapq import *
-import sys
 import itertools
 
 
@@ -90,14 +89,12 @@ DIRS = ((-1, 0), (0, 1), (1, 0), (0, -1))
 def main(infi: str):
     inp = lines_stripped(infi)
     coords = set()
-    # The start of the range was raised manually. TODO: binary search, or a
-    # better implementation of graph search.
-    for b in range(2900, len(inp)):
+    for b in range(1025, len(inp)):
         for x in inp[:b]:
             nums = x.split(',')
             coords.add((int(nums[0]), int(nums[1])))
         maxi = 71
-        # maxi = 7
+        # maxi = 7 # for test input
         maxj = maxi
         edges = []
         for i, j in product(range(maxi), range(maxj)):
@@ -112,9 +109,7 @@ def main(infi: str):
                     edges.append(((i + d[0], j + d[1]), (i, j), 1))
         g = Graph(edges)
         path, shortest_length = g.dijkstra((0, 0), (maxi - 1, maxj - 1))
-        if shortest_length == inf:
-            return inp[b - 1]
-        # print(b, inp[b-1], shortest_length, path[-1])
+        return shortest_length
 
 
 DAY = 18
