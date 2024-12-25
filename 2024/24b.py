@@ -4,22 +4,10 @@ from more_itertools import flatten
 
 
 def main(infi: str):
-    inp = filerstrip(infi)
-    inputs, rules = inp.split('\n\n')
-    values = {}
-    for i in inputs.split('\n'):
-        name, val = i.split(': ')
-        values[name] = bool(int(val))
     rul = []
-    for r in rules.split('\n'):
+    for r in filerstrip(infi).split('\n\n')[1].split('\n'):
         match = re.fullmatch(r'^(.*?) (.*?) (.*?) -> (.*?)$', r)
         rul.append((match[1], match[2], match[3], match[4]))
-    input_ands = {
-        d
-        for x, oper, y, d in rul
-        if oper == 'AND' and x[0] in 'xy' and y[0] in 'xy'
-    }
-    other_ands = {d for x, oper, y, d in rul if oper == 'AND'} - input_ands
     carry_inputs = set(
         flatten([(x, y) for x, oper, y, d in rul if oper == 'OR'])
     )
@@ -38,18 +26,8 @@ def main(infi: str):
     # match are misplaced. jfb is a special case since that one is used to
     # compute carry for the LSB and isn't merged with previous carry, so it's
     # correct.
-    print(
-        ','.join(
-            sorted(
-                list(
-                    (
-                        ands ^ carry_inputs
-                    )
-                    - {'jfb'}
-                )
-                + ['z05', 'hdt']
-            )
-        )
+    return ','.join(
+        sorted(list((ands ^ carry_inputs) - {'jfb'}) + ['z05', 'hdt'])
     )
 
 
