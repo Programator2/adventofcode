@@ -1,9 +1,47 @@
 from aoc import *
-from collections import defaultdict
-from functools import reduce
-import pickle
-from pprint import pprint as pp
+from itertools import (
+    pairwise,
+    combinations,
+    repeat,
+    product,
+    accumulate,
+    permutations,
+    cycle,
+    combinations_with_replacement,
+)
+from more_itertools import (
+    first_true,
+    flatten,
+    ncycles,
+    first_true,
+    zip_broadcast,
+    windowed,
+    chunked,
+    take,
+    peekable,
+)
+import re
+from blessed import BlessedList
+from collections import (
+    namedtuple,
+    defaultdict,
+    OrderedDict,
+    Counter,
+    deque,
+    UserList,
+)
+import operator
+from operator import itemgetter
+from bisect import *
+from functools import reduce, cache, cmp_to_key
+import math
+from copy import deepcopy
+from math import ceil
+from heapq import *
 import sys
+from pprint import pprint as pp
+from statistics import mode
+from string import ascii_uppercase
 
 
 DIRS = ((-1, 0), (0, 1), (1, 0), (0, -1))
@@ -12,20 +50,14 @@ DIRS = ((-1, 0), (0, 1), (1, 0), (0, -1))
 # N E S W
 
 
-def search(m, i, j, face, score, scorem, prev, fro):
+# TODO: Very inefficient. I have to rewrite it using Dijkstra.
+def search(m, i, j, face, score, scorem):
     if (i, j, face) not in scorem:
         scorem[i, j, face] = score
-        prev[i, j, face] = {fro}
-        if m[i, j] == 'E':
-            return
-    elif scorem[i, j, face] < score:
-        return
-    elif scorem[i, j, face] == score:
-        prev[i, j, face].add(fro)
+    elif scorem[i, j, face] <= score:
         return
     else:
         scorem[i, j, face] = score
-        prev[i, j, face] = {fro}
         if m[i, j] == 'E':
             return
     for dir, diff in enumerate(DIRS):
@@ -34,26 +66,7 @@ def search(m, i, j, face, score, scorem, prev, fro):
             facediff = abs(face - dir)
             if facediff == 3:
                 facediff = 1
-            search(
-                m,
-                *newpos,
-                dir,
-                score + 1 + facediff * 1000,
-                scorem,
-                prev,
-                (i, j, face),
-            )
-
-
-def dfs(prev, elem: set):
-    if not elem:
-        return elem
-    return (
-        reduce(
-            lambda x, y: x | y, (dfs(prev, prev.get(e, set())) for e in elem)
-        )
-        | elem
-    )
+            search(m, *newpos, dir, score + 1 + facediff * 1000, scorem)
 
 
 def main(infi: str):
@@ -62,20 +75,15 @@ def main(infi: str):
     pos = [(i, j) for (i, j), e in inp.items() if e == 'S'][0]
     face = 1
     score = {}
-    # store the previous position for state i, j, face -> set(previous states)
-    prev = defaultdict(set)
+    search(inp, *pos, face, 0, score)
     end = [(i, j) for (i, j), e in inp.items() if e == 'E'][0]
-    # print(list((*end, face, score[(*end, face)]) for face in range(4)))
-    # try:
-    #     with open('16.pickle', 'rb') as f:
-    #         prev = pickle.load(f)
-    # except OSError:
-    search(inp, *pos, face, 0, score, prev, None)
-    #     with open('16.pickle', 'wb') as f:
-    #         pickle.dump(prev, f)
-    best_paths = dfs(prev, {(1, 139, 1)})
-    best_paths.remove(None)
-    return len(set((i, j) for i, j, _ in best_paths))
+    return min(
+        x[3]
+        for x in list(
+            (*end, face, score.get((*end, face), None)) for face in range(4)
+        )
+        if x[3] is not None
+    )
 
 
 DAY = 16
