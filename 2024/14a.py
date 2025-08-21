@@ -29,16 +29,13 @@ def main(infi: str):
         match = re.fullmatch(r'^p=(.*),(.*) v=(.*),(.*)$', l)
         robot = tuple(map(int, match.groups()))
         robots.append([(robot[0], robot[1]), (robot[2], robot[3])])
-    i = 0
-    while True:
+    for _ in range(100):
         for r in robots:
-            newpos = ((r[0][0] + r[1][0]) % width, (r[0][1] + r[1][1]) % height)
+            newpos = (
+                (r[0][0] + r[1][0]) % width,
+                (r[0][1] + r[1][1]) % height,
+            )
             r[0] = newpos
-            m[r[0][0], r[0][1]] = 'x'
-        print(i)
-        pmat(m)
-        m = [[' '] * 101 for _ in range(height)]
-        i += 1
     q1 = sum(1 for r in robots if r[0][0] < (width // 2) and r[0][1] < (height // 2))
     q2 = sum(1 for r in robots if r[0][0] > (width // 2) and r[0][1] < (height // 2))
     q3 = sum(1 for r in robots if r[0][0] < (width // 2) and r[0][1] > (height // 2))
