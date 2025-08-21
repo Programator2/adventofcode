@@ -1,15 +1,17 @@
 from aoc import *
+import re
 
 
 # This one required manual inspection of the output. If we take a look at first
-# 100 states, states 38 and 98 stand out because they contain prominent vertical
-# and horizontal incomplete lines containing many robots (see 14_38.txt and
-# 14_98.txt). If we continue watching later states, we can see that similar
-# patterns emerge every 101 and 103 states, respectively.
+# 100 states, states 38 and 98 stand out because they contain prominent
+# vertical and horizontal incomplete lines containing many robots (see
+# 14_38.txt and 14_98.txt). If we continue watching later states, we can see
+# that similar patterns emerge every 101 and 103 states, respectively.
 #
-# Let's find a state, where they occur at the same time. We'll be solving CRT as
+# Let's find a state, where they occur at the same time. We'll be solving CRT
+# as
 print(crt([101, 103], [38, 98]))
-# The output is 7411. If we check this state, the Chrsitmas tree is there. The
+# The output is 7411. If we check this state, the Christmas tree is there. The
 # answer os *7412*, since indexing starts at zero.
 
 
@@ -42,4 +44,4 @@ FILE_EXP = f"{DAY}_exp.txt"
 FILE = f"{DAY}.txt"
 # test_and_submit(main, FILE_TEST, FILE_EXP, FILE, DAY)
 # print(main(FILE_TEST))
-print(main(FILE))
+main(FILE)
