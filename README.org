@@ -1,6 +1,10 @@
 * About
   Solutions in *Python*. I'm using the =advent-of-code-data= package to submit
   my answers.
+* Personal Stats 2025
+| Day |     Time |     Time |
+|-----+----------+----------|
+|   1 | 00:07:06 | 00:44:16 |
 * Personal Stats 2024
 | Day |     Time |  Rank | Score |     Time |  Rank | Score |
 |-----+----------+-------+-------+----------+-------+-------|
