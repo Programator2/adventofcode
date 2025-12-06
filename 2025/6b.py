@@ -9,32 +9,32 @@ def main(infi: str):
     widths = []
     starts = []
     operators = []
-    s = 0
     for i, c in enumerate(inp[-1]):
         if c != ' ':
             widths.append(count)
             count = 0
             starts.append(i)
-            if c == '*':
-                op = mul
-            else:
-                op = add
-            operators.append(op)
+            operators.append(mul if c == '*' else add)
         else:
             count += 1
     widths.append(count + 1)
-    widths = widths [1:]
+    widths = widths[1:]
     inp = inp[:-1]
-    for width, start, op in zip(widths, starts, operators):
-        sub = [row[start:width+start] for row in inp]
-        newsub = []
-        for i in range(width - 1, -1, -1):
-            st = ''
-            for row in sub:
-                st += row[i]
-            newsub.append(int(st))
-        s += reduce(op, newsub)
-    return s
+    return sum(
+        reduce(
+            op,
+            [
+                int(
+                    ''.join(
+                        row[i]
+                        for row in [row[start : width + start] for row in inp]
+                    )
+                )
+                for i in range(width - 1, -1, -1)
+            ],
+        )
+        for width, start, op in zip(widths, starts, operators)
+    )
 
 
 DAY = 6

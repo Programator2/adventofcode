@@ -5,17 +5,13 @@ from functools import reduce
 
 def main(infi: str):
     inp = lines_stripped(infi)
-    nums = []
-    s = 0
-    for a in inp[:-1]:
-        nums.append([int(x) for x in a.split()])
-    for i, op in enumerate(inp[-1].split()):
-        if op == '*':
-            op = mul
-        else:
-            op = add
-        s += reduce(op, [x[i] for x in nums])
-    return s
+    return sum(
+        reduce(
+            mul if op == '*' else add,
+            [x[i] for x in [[int(x) for x in a.split()] for a in inp[:-1]]],
+        )
+        for i, op in enumerate(inp[-1].split())
+    )
 
 
 DAY = 6
