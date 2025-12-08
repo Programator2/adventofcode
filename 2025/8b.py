@@ -4,19 +4,18 @@ from operator import itemgetter
 
 
 def main(infi: str):
-    inp = lines_stripped(infi)
-    num = []
-    for a in inp:
-        x, y, z = a.split(',')
-        num.append((int(x), int(y), int(z)))
-    dists = {}
-    for i in range(len(num)):
-        for j in range(i + 1, len(num)):
-            d = math.dist(num[i], num[j])
-            dists[i, j] = d
-    it = sorted(dists.items(), key=itemgetter(1))
+    num = [tuple(map(int, a.split(','))) for a in lines_stripped(infi)]
     pointers = {}
-    for i, ((a, b), length) in enumerate(it):
+    for (a, b), length in sorted(
+        {
+            (i, j): math.dist(i, j)
+            for i, j in combinations(
+                num,
+                2,
+            )
+        }.items(),
+        key=itemgetter(1),
+    ):
         if a in pointers and b in pointers:
             join = pointers[a] | pointers[b]
             for x in join:
@@ -36,7 +35,7 @@ def main(infi: str):
             pointers[b] = pointers[a]
 
         if len(pointers[a]) == len(num):
-            return num[a][0] * num[b][0]
+            return a[0] * b[0]
 
 
 DAY = 8

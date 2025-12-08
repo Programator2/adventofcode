@@ -2,25 +2,28 @@ from aoc import *
 import math
 from functools import reduce
 from operator import itemgetter, mul
+from itertools import combinations
+from more_itertools import take
 
 
 def main(infi: str):
-    inp = lines_stripped(infi)
-    num = []
-    for a in inp:
-        x, y, z = a.split(',')
-        num.append((int(x), int(y), int(z)))
-    dists = {}
-    for i in range(len(num)):
-        for j in range(i + 1, len(num)):
-            d = math.dist(num[i], num[j])
-            dists[i, j] = d
-    it = sorted(dists.items(), key=itemgetter(1))
     pointers = {}
-    for i, ((a, b), length) in enumerate(it):
-        if i == 1000:
-            break
-
+    for (a, b), length in take(
+        1000,
+        sorted(
+            {
+                (i, j): math.dist(i, j)
+                for i, j in combinations(
+                    [
+                        tuple(map(int, a.split(',')))
+                        for a in lines_stripped(infi)
+                    ],
+                    2,
+                )
+            }.items(),
+            key=itemgetter(1),
+        ),
+    ):
         if a in pointers and b in pointers:
             join = pointers[a] | pointers[b]
             for i in join:
@@ -38,11 +41,17 @@ def main(infi: str):
         else:
             pointers[a] = {a, b}
             pointers[b] = pointers[a]
-    fsets = set()
-    for s in pointers.values():
-        fsets.add(frozenset(s))
-    s = sorted(fsets, key=lambda x: len(x), reverse=True)[:3]
-    return reduce(mul, [len(x) for x in s])
+    return reduce(
+        mul,
+        [
+            len(x)
+            for x in sorted(
+                set(frozenset(s) for s in pointers.values()),
+                key=lambda x: len(x),
+                reverse=True,
+            )[:3]
+        ],
+    )
 
 
 DAY = 8
